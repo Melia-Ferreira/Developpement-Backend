@@ -12,4 +12,10 @@ import monprojet.entity.Country;
 
 public interface CountryRepository extends JpaRepository<Country, Integer> {
 
+    @Query(value = "SELECT count(population)"
+    + "FROM CITY"
+    +"WHERE CITY.COUNTRY_ID = :idPays",
+    nativeQuery = true)
+    public List<Country> populationPourUnPaysSQL(Integer idPays);
+
 }
