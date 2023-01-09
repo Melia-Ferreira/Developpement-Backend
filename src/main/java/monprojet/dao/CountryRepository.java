@@ -20,8 +20,8 @@ public interface CountryRepository extends JpaRepository<Country, Integer> {
      */
 
     @Query(value = "SELECT SUM(POPULATION)"
-    + "FROM CITY"
-    +"WHERE COUNTRY_ID = :idPays",
+    +" FROM CITY"
+    +" WHERE COUNTRY_ID=:idPays",
     nativeQuery = true)
     public Integer populationPourUnPaysSQL(int idPays);
 
@@ -31,9 +31,10 @@ public interface CountryRepository extends JpaRepository<Country, Integer> {
      * @return la population totale par pays, sous la forme d'une liste de
      * DTO PopulationParPays
      */
-    @Query(value ="SELECT COUNTRY.NAME, SUM(CITY.POPULATION)"
-    + "FROM COUNTRY"
-    + "INNER JOIN CITY ON COUNTRY.ID = CITY.COUNTRY_ID",
+    @Query(value ="SELECT COUNTRY.NAME AS Pays, SUM(CITY.POPULATION) AS Population"
+    +" FROM COUNTRY"
+    +" INNER JOIN CITY ON COUNTRY.ID=CITY.COUNTRY_ID"
+            + " GROUP BY COUNTRY.NAME",
             nativeQuery = true)
     public List<PopulationParPays> populationParPays();
 
